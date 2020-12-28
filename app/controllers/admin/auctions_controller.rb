@@ -13,6 +13,7 @@ class Admin::AuctionsController < ApplicationController
 
   def create
     @auction = Auction.new(auction_params)
+    @auction.image.attach(params[:image])
 
     if @auction.save
       flash[:notice] = "The auction was created successfully"
@@ -28,6 +29,7 @@ class Admin::AuctionsController < ApplicationController
 
   def update
     @auction = Auction.find(params[:id])
+    @auction.image.attach(params[:image])
 
     if @auction.update(auction_params)
       flash[:notice] = "This auction was updated successfully"
@@ -49,6 +51,6 @@ class Admin::AuctionsController < ApplicationController
     def auction_params
       params
         .require(:auction)
-        .permit(:name, :description, :start_date, :end_date, :featured, :enabled, :start_amount)
+        .permit(:name, :description, :start_date, :end_date, :featured, :enabled, :start_amount, :image)
     end
 end

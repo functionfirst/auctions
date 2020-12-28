@@ -6,12 +6,14 @@
     >
       <% @auctions.each do |auction| %>
         <li class="mb-4 md:w-1/3 lg:w-1/4">
-          <%= link_to auction_path(auction), class: "rounded m-2 overflow-hidden shadow-sm bg-white block hover:shadow-md" do %>
+          <%= link_to auction_path(auction), class: "rounded-md m-2 overflow-hidden shadow-sm bg-white block hover:shadow-md" do %>
             <div class="relative">
-              <%= render "status" %>
+              <div class="absolute z-10 right-0">
+                <%= render "status" %>
+              </div>
 
-              <% if defined?(auction.image) %>
-                <%= image_to(auction.image, alt: auction.name ) %>
+              <% if auction.image.attached? %>
+                <%= image_tag url_for(auction.image), alt: auction.name %>
               <% end %>
 
               <% if defined?(auction.countdown) %>

@@ -8,6 +8,10 @@
   <%= @auction.name %>
 <% end %>
 
+<% if @auction.image.attached? %>
+  <img src="<%= url_for(@auction.image) %>">
+<% end %>
+
 <p><%= @auction.description %></p>
 
 <p>

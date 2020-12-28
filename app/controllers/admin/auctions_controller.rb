@@ -3,10 +3,6 @@ class Admin::AuctionsController < ApplicationController
     @auctions = Auction.all
   end
 
-  def show
-    @auction = Auction.find(params[:id])
-  end
-
   def new
     @auction = Auction.new
   end

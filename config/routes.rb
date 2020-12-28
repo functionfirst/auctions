@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  root to: 'static#index'
+  root 'auctions#index'
 
-  # get 'static/index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :auctions
+
+  namespace :admin do
+    resources :auctions
+  end
 end

@@ -1,0 +1,5 @@
+<% @auctions.each do |auction| %>
+  <p class="border">
+    <%= link_to auction.name, auction_path(auction) %>
+  </p>
+<% end %>

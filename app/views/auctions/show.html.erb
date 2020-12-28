@@ -1,0 +1,21 @@
+<% content_for :page_title do %>
+  <%= @auction.name %>
+<% end %>
+
+<p><%= @auction.description %></p>
+
+<p>
+  Start Date:
+  <%= @auction.start_date %>
+</p>
+
+<p>
+  End Date:
+  <%= @auction.end_date %>
+</p>
+
+<p>
+  Start Amount:
+  £<%= @auction.start_amount %>
+</p>
+

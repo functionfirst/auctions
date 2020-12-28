@@ -1,0 +1,17 @@
+<% content_for :page_title do %>
+  Editing Auction
+<% end %>
+
+<% content_for :breadcrumb do %>
+  <%= link_to "Admin", admin_auctions_path %>
+  <span class="text-gray-400 mx-1">/</span>
+  <%= link_to "Auctions", admin_auctions_path %>
+  <span class="text-gray-400 mx-1">/</span>
+  <%= link_to "Details", admin_auction_path %>
+  <%# <span class="text-gray-400 mx-1">/</span> %>
+  <%# <span class="text-gray-600">Edit Auction</span> %>
+<% end %>
+
+
+
+<%= render "form" %>

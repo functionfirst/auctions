@@ -1,0 +1,86 @@
+<%= form_with model: [:admin, @auction] do |form| %>
+  <div class="px-4 py-5 bg-white space-y-6 sm:p-6 max-w-4xl mx-auto rounded shadow-md">
+    <div class="mb-4">
+      <%= form.label :name, class: 'block text-sm font-medium text-gray-700' %>
+
+      <%= form.text_field :name, class: 'px-3 py-2 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+
+      <% @auction.errors.full_messages_for(:name).each do |message| %>
+        <%= form.label :name, message, class: 'text-sm text-red-600 cursor-pointer inline-block mt-1' %>
+      <% end %>
+    </div>
+
+    <div>
+      <%= form.label :description, class: 'block text-sm font-medium text-gray-700' %>
+
+      <div class="mt-1">
+        <%= form.text_area :description, class: 'px-3 py-2 border shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md' %>
+      </div>
+    </div>
+
+    <div class="mb-4 col-span-6">
+      <%= form.label :start_date, class: 'block text-sm font-medium text-gray-700' %>
+      <%= form.date_field :start_date, class: 'px-3 py-2 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+
+      <% @auction.errors.full_messages_for(:start_date).each do |message| %>
+        <%= form.label :start_date, message, class: 'text-sm text-red-600 cursor-pointer inline-block mt-1' %>
+      <% end %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :end_date, class: 'block text-sm font-medium text-gray-700' %>
+      <%= form.date_field :end_date, class: 'px-3 py-2 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+
+      <% @auction.errors.full_messages_for(:end_date).each do |message| %>
+        <%= form.label :end_date, message, class: 'text-sm text-red-600 cursor-pointer inline-block mt-1' %>
+      <% end %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :start_amount, class: 'block text-sm font-medium text-gray-700' %>
+
+      <div class="mt-1 flex rounded-md shadow-sm">
+        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+          &pound;
+        </span>
+        <%= form.number_field :start_amount, class: 'px-3 py-2 border focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300' %>
+      </div>
+
+      <% @auction.errors.full_messages_for(:start_amount).each do |message| %>
+        <%= form.label :start_amount, message, class: 'text-sm text-red-600 cursor-pointer inline-block mt-1' %>
+      <% end %>
+    </div>
+
+    <div class="mt-4 space-y-4">
+      <div class="flex items-start">
+        <div class="flex items-center h-5">
+          <%= form.check_box :featured, class: 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded' %>
+        </div>
+
+        <div class="ml-3 text-sm">
+          <%= form.label :featured, class: 'font-medium text-gray-700' %>
+          <p class="text-gray-500">
+            Promote this auction where available
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-start">
+        <div class="flex items-center h-5">
+          <%= form.check_box :enabled, class: 'focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded' %>
+        </div>
+
+        <div class="ml-3 text-sm">
+          <%= form.label :enabled, class: 'font-medium text-gray-700' %>
+          <p class="text-gray-500">
+            Display this auction on the site
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-right">
+      <%= form.submit class: 'cursor-pointer inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' %>
+    </div>
+  </div>
+<% end %>

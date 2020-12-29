@@ -2,166 +2,187 @@
   <%= @auction.name %>
 <% end %>
 
-<div class="p-4 md:p-8">
-    <!--
-    <h1 class="text-2xl font-thin text-center mb-6">
-      <%= @auction.name %>
-    </h1>
-    -->
-
-    <p class="leading-loose">
-      <%= @auction.description %>
-    </p>
-
-    <div class="flex flex-col items-center">
-      <p class="uppercase text-xs flex flex-col items-center mb-4">
-        Time Remaining
-      </p>
-
-      <div v-if="showCountdown" class="text-2xl">
-        <span class="font-bold">{{ countdown.days }}</span>d
-        <span class="font-bold">{{ countdown.hours }}</span>h
-        <span class="font-bold">{{ countdown.minutes }}</span>min
-        <span class="font-bold">{{ countdown.seconds }}</span>sec
-      </div>
-
-      <p class="text-gray-700">
-        Auction ends on
-        {{ auction.endDate | formatDate }}
-        at
-        {{ auction.endDate | formatDate('hh:mma') }}
-      </p>
-    </div>
-
-    <div
-      v-if="auction.currentBid.value"
-      class="p-4 bg-green-300 text-center"
-    >
-      <div>Highest Bid</div>
-      £{{ auction.currentBid.value }}
-    </div>
-
-    <div v-else>
-      <p class="text-center font-medium my-6">
-        This auction currently has no bids
-      </p>
-
-      <div class="text-center">
-        Bidding for this auction will start at
-        <div class="font-bold text-xl">
-          £{{ auction.startAmount }}
+<div class="p-6 bg-white">
+  <div class="md:grid grid-cols-2 gap-4">
+    <div>
+      <% if @auction.images.attached? %>
+        <div class="grid grid-cols-3 gap-4">
+          <% @auction.images.each do |image|%>
+            <% if @auction.images.first == image %>
+              <%= image_tag url_for(image), alt: @auction.name, class: "col-span-3" %>
+            <% else %>
+              <%= image_tag url_for(image), alt: @auction.name, class: "col-span-1" %>
+            <% end %>
+          <% end %>
         </div>
-      </div>
+      <% end %>
     </div>
 
-    <form
-      v-if="$store.getters.isLoggedIn"
-      class="flex flex-col"
-      @submit.prevent="submitBid"
-    >
-      <label
-        v-if="bidBlocker && bid.value == 0"
-        for="bidValue"
-        class="cursor-pointer my-2 text-red-600"
-      >Please select a bid increment</label>
+    <div>
+      <div>
+        <h1 class="text-2xl mb-3 font-semibold uppercase text-gray-600">
+          <%= @auction.name %>
+        </h1>
 
-      <label
-        v-else
-        for="bidValue"
-        class="cursor-pointer my-2"
-      >Select a bid increment</label>
-
-      <div class="mb-4">
-        <select
-          id="bidValue"
-          v-model="bid.value"
-          required
-          class="appearance-none border px-4 py-3 w-full text-lg"
-          style="-webkit-appearance: none"
-        >
-          <option value="0">
-            Click to select
-          </option>
-          <option
-            v-for="(increment, index) in bidIncrements"
-            :key="index"
-            :value="increment"
-          >
-            + £{{ increment }}
-          </option>
-        </select>
+        <p class="leading-loose text-sm">
+          <%= @auction.description %>
+        </p>
       </div>
 
-      <div
-        v-if="error"
-        class="bg-red-500 text-white p-4"
-      >
-        {{ error }}
-      </div>
+        <div class="flex flex-col items-center">
+          <p class="uppercase text-xs flex flex-col items-center mb-4">
+            Time Remaining
+          </p>
 
-      <button
-        v-if="bid.value == 0"
-        v-palette
-        type="button"
-        class="btn btn--primary flex flex-col shadow-md items-center"
-        @click="bidBlocker = !bidBlocker"
-      >
-        <span class="text-gray-400 text-sm">Place a bid for:</span>
-        <span class="text-2xl font-bold">Select a bid amount</span>
+          <div v-if="showCountdown" class="text-2xl">
+            <span class="font-bold">{{ countdown.days }}</span>d
+            <span class="font-bold">{{ countdown.hours }}</span>h
+            <span class="font-bold">{{ countdown.minutes }}</span>min
+            <span class="font-bold">{{ countdown.seconds }}</span>sec
+          </div>
 
-        <small>You can review before submitting</small>
-      </button>
-
-      <div
-        v-else
-        class
-      >
-        <button
-          v-if="!showConfirm"
-          v-palette
-          class="btn btn--primary flex flex-col rounded shadow-md justify-center items-center"
-          type="button"
-          @click="showConfirm = true"
-        >
-          <span class="text-gray-400 text-sm">Place a bid for:</span>
-          <span class="text-2xl font-bold">£{{ bidValue }}</span>
-
-          <small>You can review before submitting</small>
-        </button>
+          <p class="text-gray-700">
+            Auction ends on
+            {{ auction.endDate | formatDate }}
+            at
+            {{ auction.endDate | formatDate('hh:mma') }}
+          </p>
+        </div>
 
         <div
-          v-else
-          v-palette
-          class="panel panel--primary flex flex-col justify-center items-center"
+          v-if="auction.currentBid.value"
+          class="p-4 bg-green-300 text-center"
         >
-          <span class="text-gray-400 text-sm">You are about to submit a bid for:</span>
+          <div>Highest Bid</div>
+          £{{ auction.currentBid.value }}
+        </div>
 
-          <span class="text-2xl font-bold text-white mb-4">£{{ bidValue }}</span>
+        <div v-else>
+          <p class="text-center font-medium my-6">
+            This auction currently has no bids
+          </p>
 
-          <div class="flex items-center justify-between w-full">
-            <button
-              v-palette
-              class="btn btn--success flex-1 mr-2"
-            >
-              Confirm bid
-            </button>
-
-            <button
-              v-palette
-              type="button"
-              class="btn btn--default flex-1 ml-2"
-              @click="showConfirm = false"
-            >
-              Cancel
-            </button>
+          <div class="text-center">
+            Bidding for this auction will start at
+            <div class="font-bold text-xl">
+              £{{ auction.startAmount }}
+            </div>
           </div>
         </div>
+
+        <form
+          v-if="$store.getters.isLoggedIn"
+          class="flex flex-col"
+          @submit.prevent="submitBid"
+        >
+          <label
+            v-if="bidBlocker && bid.value == 0"
+            for="bidValue"
+            class="cursor-pointer my-2 text-red-600"
+          >Please select a bid increment</label>
+
+          <label
+            v-else
+            for="bidValue"
+            class="cursor-pointer my-2"
+          >Select a bid increment</label>
+
+          <div class="mb-4">
+            <select
+              id="bidValue"
+              v-model="bid.value"
+              required
+              class="appearance-none border px-4 py-3 w-full text-lg"
+              style="-webkit-appearance: none"
+            >
+              <option value="0">
+                Click to select
+              </option>
+              <option
+                v-for="(increment, index) in bidIncrements"
+                :key="index"
+                :value="increment"
+              >
+                + £{{ increment }}
+              </option>
+            </select>
+          </div>
+
+          <div
+            v-if="error"
+            class="bg-red-500 text-white p-4"
+          >
+            {{ error }}
+          </div>
+
+
+          <%= render 'bids/form' %>
+
+          <button
+            v-if="bid.value == 0"
+            v-palette
+            type="button"
+            class="btn btn--primary flex flex-col shadow-md items-center"
+            @click="bidBlocker = !bidBlocker"
+          >
+            <span class="text-gray-400 text-sm">Place a bid for:</span>
+            <span class="text-2xl font-bold">Select a bid amount</span>
+
+            <small>You can review before submitting</small>
+          </button>
+
+          <div
+            v-else
+            class
+          >
+            <button
+              v-if="!showConfirm"
+              v-palette
+              class="btn btn--primary flex flex-col rounded shadow-md justify-center items-center"
+              type="button"
+              @click="showConfirm = true"
+            >
+              <span class="text-gray-400 text-sm">Place a bid for:</span>
+              <span class="text-2xl font-bold">£{{ bidValue }}</span>
+
+              <small>You can review before submitting</small>
+            </button>
+
+            <div
+              v-else
+              v-palette
+              class="panel panel--primary flex flex-col justify-center items-center"
+            >
+              <span class="text-gray-400 text-sm">You are about to submit a bid for:</span>
+
+              <span class="text-2xl font-bold text-white mb-4">£{{ bidValue }}</span>
+
+              <div class="flex items-center justify-between w-full">
+                <button
+                  v-palette
+                  class="btn btn--success flex-1 mr-2"
+                >
+                  Confirm bid
+                </button>
+
+                <button
+                  v-palette
+                  type="button"
+                  class="btn btn--default flex-1 ml-2"
+                  @click="showConfirm = false"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div
+          v-else
+          class="bg-red-500 p-4 mt-4 rounded-sm shadow text-center"
+        >
+          You must be logged in to bid on this Auction
+        </div>
       </div>
-    </form>
-    <div
-      v-else
-      class="bg-red-500 p-4 mt-4 rounded-sm shadow text-center"
-    >
-      You must be logged in to bid on this Auction
     </div>
   </div>

@@ -1,5 +1,5 @@
 class Auction < ApplicationRecord
-  has_one_attached :image
+  has_many_attached :images
   has_many :bids, dependent: :destroy
 
   validates :name, presence: true, length: { minimum: 5 }

@@ -12,8 +12,8 @@
                 <%= render "status" %>
               </div>
 
-              <% if auction.image.attached? %>
-                <%= image_tag url_for(auction.image), alt: auction.name %>
+              <% if auction.images.attached? %>
+                <%= image_tag url_for(auction.images[0]), alt: auction.name %>
               <% end %>
 
               <% if defined?(auction.countdown) %>

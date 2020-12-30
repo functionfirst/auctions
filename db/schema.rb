@@ -56,8 +56,11 @@ ActiveRecord::Schema.define(version: 2020_12_29_190235) do
     t.float "value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "auction_id", null: false
+    t.index ["auction_id"], name: "index_bids_on_auction_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bids", "auctions"
 end

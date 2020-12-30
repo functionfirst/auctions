@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root 'auctions#index'
 
-  resources :auctions
+  resources :auctions do
+    resources :bids
+  end
 
   namespace :admin do
     resources :auctions do

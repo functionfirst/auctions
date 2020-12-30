@@ -12,6 +12,31 @@
   <%# <span class="text-gray-600">Edit Auction</span> %>
 <% end %>
 
-
-
 <%= render "form" %>
+
+<div class="max-w-3xl mx-auto overflow-auto">
+  <table class="w-full border border-gray-200">
+    <thead>
+      <tr class="bg-gray-900 text-white text-sm uppercase">
+        <th class="font-medium p-2 text-left">User</th>
+        <th class="font-medium p-2 text-right">Value</th>
+        <th class="font-medium p-2 text-center">Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @auction.bids.each do |bid| %>
+        <tr class="border border-gray-200">
+          <td class="bg-white p-2">
+            User Name
+          </td>
+          <td class="bg-white p-2 text-right">
+            <%= bid.value %>
+          </td>
+          <td class="bg-white p-2 text-center">
+            <%= bid.created_at.strftime("%d/%m/%Y %H:%M:%S") %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

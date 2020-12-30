@@ -10,10 +10,20 @@ class Auction < ApplicationRecord
   def has_finished
     # @todo this needs to change if bids force the auction to stay open longer
     # than the end_date
-    end_date > Date.now
+    DateTime.now > end_date
+  end
+
+  def is_live
+    # @todo this needs to change if bids force the auction to stay open longer
+    # than the end_date
+    DateTime.now > start_date && DateTime.now < end_date
   end
 
   def has_started
-    start_date > Date.now
+    DateTime.now > start_date
+  end
+
+  def current_bid
+    { value: 3900 }
   end
 end

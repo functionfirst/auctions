@@ -43,18 +43,18 @@
       <% end %>
     </ul>
 
-    <div class="md:w-1/4">
+    <div class="md:w-1/3">
       <%= form.label :start_date, class: 'block text-sm font-medium text-gray-700' %>
-      <%= form.date_field :start_date, class: 'px-3 py-2 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+      <%= form.datetime_field :start_date, class: 'px-3 py-2 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
 
       <% @auction.errors.full_messages_for(:start_date).each do |message| %>
         <%= form.label :start_date, message, class: 'text-sm text-red-600 cursor-pointer inline-block mt-1' %>
       <% end %>
     </div>
 
-    <div class="md:w-1/4">
+    <div class="md:w-1/3">
       <%= form.label :end_date, class: 'block text-sm font-medium text-gray-700' %>
-      <%= form.date_field :end_date, class: 'px-3 py-2 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
+      <%= form.datetime_field :end_date, class: 'px-3 py-2 border mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md' %>
 
       <% @auction.errors.full_messages_for(:end_date).each do |message| %>
         <%= form.label :end_date, message, class: 'text-sm text-red-600 cursor-pointer inline-block mt-1' %>

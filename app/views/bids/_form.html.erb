@@ -1,10 +1,80 @@
-<%= form_with(model:  [ @auction, @auction.bids.build ], local: true) do |form| %>
-  <p>
-    <%= form.label :value %><br>
-    <%= form.text_field :value %>
-  </p>
+<div
+  data-controller="bids"
+  data-bids-initial-value="3900"
+  data-bids-increment-value="0"
+  data-bids-confirm-value="false"
+>
+  <%= form_with model:  [ @auction, @auction.bids.build ] do |form| %>
+    <div class="flex flex-col mt-6">
+      <label for="bid_value" class="cursor-pointer mb-2">
+        Select a bid increment:
+      </label>
 
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>
+      <%= form.select(:value, options_for_select(Bid::INCREMENTS.map{ |f| ["+ £#{('%0.2f' % f)}", f]}, "Click to select"), { prompt: "Click to select"}, { required: true, class: 'appearance-none border px-4 py-3 w-full text-lg', data: { action: "bids#setIncrement" } }) %>
+
+      <label
+        for="bid_value"
+        class="cursor-pointer mt-1 text-red-600 hidden text-sm"
+        data-bids-target="required"
+      >
+        Please select a bid increment
+      </label>
+
+      <!--
+      <%= button_tag(
+          type: "submit",
+          class: "h-24 justify-center bg-blue-300 flex flex-col focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 font-medium hover:bg-indigo-700 items-center mt-4 rounded-md text-white w-full"    
+      ) do %>
+        <%# <span class="text-2xl font-semibold">Select a bid amount</span> %>
+
+        <span class="text-indigo-100 text-sm">Place a bid for:</span>
+        <span class="text-2xl font-semibold">£4,001.00</span>
+      <% end %>
+      -->
+
+      <!--
+      <span class="text-indigo-100 text-sm">Place a bid for:</span>
+      <span data-bids-target="totalBid" class="text-2xl font-semibold">£4,001.00</span>
+      -->
+
+      <button
+        type="button"
+        class="bg-blue-300 hover:bg-blue-400 mt-4 py-4 rounded-sm shadow-sm text-center"
+        data-action="bids#confirmBid"
+        data-bids-target="confirmBtn"
+      >
+        Place Bid
+        <span class="block mt-1 text-xs text-blue-900">You can review before submitting</span>
+      </button>
+
+      <div
+        data-bids-target="confirmation"
+        class="bg-indigo-600 p-4 rounded-md flex flex-col justify-center items-center mt-4"
+      >
+        <span class="text-indigo-100 text-sm">You are about to place a bid for:</span>
+
+        <span data-bids-target="totalBid" class="text-2xl font-bold text-white mb-4">£4,001.00</span>
+
+        <div class="flex items-center justify-between w-full">
+          <button type="submit" class="bg-green-500 hover:bg-green-600 rounded text-black py-4 flex-1 mr-2">
+            Confirm bid
+          </button>
+
+          <button
+            type="button"
+            class="bg-gray-200 hover:bg-gray-300 rounded py-4 flex-1 ml-2"
+            data-action="bids#cancelBid"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!--
+    <div class="bg-red-500 p-4 mt-4 rounded-md shadow text-center">
+      You must be logged in to bid on this Auction
+    </div>
+    -->
+  <% end %>
+</div>

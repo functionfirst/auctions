@@ -1,0 +1,18 @@
+<% if @auction.is_active %>
+  <div class="flex flex-col items-center">
+    <p class="uppercase text-xs flex flex-col items-center">
+      Time Remaining
+    </p>
+
+    <h3 class="text-2xl font-bold">
+      <%= distance_of_time_in_words_to_now(@auction.start_date) %>
+    </h3>
+
+    <p class="text-gray-700 text-sm">
+      Auction ends on
+      <%= @auction.end_date.strftime("%a %b #{@auction.end_date.day.ordinalize}") %>
+      at
+      <%= @auction.end_date.strftime("%H:%M") %>
+    </p>
+  </div>
+<% end %>

@@ -1,0 +1,11 @@
+<% if @auction.images.attached? %>
+  <div class="grid grid-cols-3 gap-4">
+    <% @auction.images.each do |image|%>
+      <% if @auction.images.first == image %>
+        <%= image_tag url_for(image), alt: @auction.name, class: "col-span-3" %>
+      <% else %>
+        <%= image_tag url_for(image), alt: @auction.name, class: "col-span-1" %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

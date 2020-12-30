@@ -1,0 +1,12 @@
+<% if @auction.bids.length == 0%>
+  <p class="text-center text-gray-600 font-semibold my-6">
+    This auction currently has no bids
+  </p>
+
+  <div class="p-4 bg-yellow-300 text-center rounded-md my-4">
+    Bidding for this auction starts at
+    <div class="font-bold text-xl">
+      £<%= @auction.start_amount %>
+    </div>
+  </div>
+<% end %>

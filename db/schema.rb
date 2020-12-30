@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_133818) do
+ActiveRecord::Schema.define(version: 2020_12_29_190235) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -43,8 +43,8 @@ ActiveRecord::Schema.define(version: 2020_12_29_133818) do
   create_table "auctions", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.date "start_date"
-    t.date "end_date"
+    t.datetime "start_date"
+    t.datetime "end_date"
     t.boolean "featured"
     t.boolean "enabled"
     t.float "start_amount"

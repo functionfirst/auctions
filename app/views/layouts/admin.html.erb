@@ -21,7 +21,7 @@
     </div>
 
     <div>
-      <nav class="hidden md:block bg-gray-800">
+      <nav class="bg-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
@@ -30,7 +30,7 @@
               </div>
               <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
-                  <%= link_to 'Auctions', auctions_path, class: "#{cp(auctions_path)} px-3 py-2 rounded-md text-sm font-medium" %>
+                  <%= link_to 'Auctions', admin_auctions_path, class: "#{cp(admin_auctions_path)} px-3 py-2 rounded-md text-sm font-medium" %>
                 </div>
               </div>
             </div>
@@ -144,7 +144,7 @@
       </nav>
 
       <main>
-        <div class="max-w-7xl mx-auto">
+        <div class="max-w-7xl mx-auto my-4">
           <%= yield %>
         </div>
       </main>

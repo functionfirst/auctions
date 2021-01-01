@@ -1,4 +1,4 @@
-class Admin::AuctionsController < ApplicationController
+class Admin::AuctionsController < AdminController
   def index
     @auctions = Auction.all
   end

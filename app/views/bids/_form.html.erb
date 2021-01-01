@@ -1,17 +1,28 @@
 <div
+  class="flex flex-col border border-yellow-100 bg-yellow-50 p-8 xrounded-sm xshadow-inner mt-6"
   data-controller="bids"
   data-bids-initial-value="3900"
-  data-bids-increment-value="0"
+  data-bids-increment-value="1"
   data-bids-confirm-value="false"
 >
   <%= form_with model:  [ @auction, @auction.bids.build ] do |form| %>
-    <div class="flex flex-col mt-6">
+    <div class="flex flex-col">
       <label for="bid_value" class="cursor-pointer mb-2">
         Select a bid increment:
       </label>
 
-      <%= form.select(:value, options_for_select(Bid::INCREMENTS.map{ |f| ["+ £#{('%0.2f' % f)}", f]}, "Click to select"), { prompt: "Click to select"}, { required: true, class: 'appearance-none border px-4 py-3 w-full text-lg', data: { action: "bids#setIncrement" } }) %>
-
+      <%= form.select(
+        :value,
+        options_for_select(Bid::INCREMENTS.map {|f| ["+ £#{('%0.2f' % f)}", f]}),
+        {},
+        {
+          class: 'appearance-none border px-4 py-3 w-full text-lg',
+          data: {
+            action: "bids#setIncrement"
+          }
+        }
+      ) %>
+      <!--
       <label
         for="bid_value"
         class="cursor-pointer mt-1 text-red-600 hidden text-sm"
@@ -19,50 +30,57 @@
       >
         Please select a bid increment
       </label>
-
-      <!--
-      <%= button_tag(
-          type: "submit",
-          class: "h-24 justify-center bg-blue-300 flex flex-col focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 font-medium hover:bg-indigo-700 items-center mt-4 rounded-md text-white w-full"    
-      ) do %>
-        <%# <span class="text-2xl font-semibold">Select a bid amount</span> %>
-
-        <span class="text-indigo-100 text-sm">Place a bid for:</span>
-        <span class="text-2xl font-semibold">£4,001.00</span>
-      <% end %>
-      -->
-
-      <!--
-      <span class="text-indigo-100 text-sm">Place a bid for:</span>
-      <span data-bids-target="totalBid" class="text-2xl font-semibold">£4,001.00</span>
       -->
 
       <button
         type="button"
-        class="bg-blue-300 hover:bg-blue-400 mt-4 py-4 rounded-sm shadow-sm text-center"
+        class="bg-indigo-600 hover:bg-indigo-700 mt-4 py-4 rounded shadow-md text-center text-white flex flex-col items-center justify-center"
         data-action="bids#confirmBid"
         data-bids-target="confirmBtn"
       >
-        Place Bid
-        <span class="block mt-1 text-xs text-blue-900">You can review before submitting</span>
+        <span class="text-sm">Place a bid for:</span>
+
+        <span
+          class="text-2xl font-semibold"
+          data-bids-target="totalBid"
+        >
+          <%= @auction.current_bid[:value] %>
+        </span>
       </button>
 
-      <div
-        data-bids-target="confirmation"
-        class="bg-indigo-600 p-4 rounded-md flex flex-col justify-center items-center mt-4"
+      <p
+        class="mt-2 text-xs text-indigo-900 text-center"
+        data-bids-target="confirmBtn"
       >
-        <span class="text-indigo-100 text-sm">You are about to place a bid for:</span>
+        You can review before submitting
+      </p>
 
-        <span data-bids-target="totalBid" class="text-2xl font-bold text-white mb-4">£4,001.00</span>
+      <div
+        class="bg-indigo-600 p-4 rounded flex flex-col justify-center items-center mt-4"
+        data-bids-target="confirmation"
+      >
+        <span class="text-sm text-white">
+          You are about to place a bid for:
+        </span>
 
-        <div class="flex items-center justify-between w-full">
-          <button type="submit" class="bg-green-500 hover:bg-green-600 rounded text-black py-4 flex-1 mr-2">
+        <span
+          class="text-2xl font-bold mb-4 text-white"
+          data-bids-target="totalBid"
+        >
+          <%= @auction.current_bid[:value] %>
+        </span>
+
+        <div class="flex flex-col md:flex-row items-center justify-between w-full">
+          <button
+            type="submit"
+            class="w-full bg-green-400 hover:bg-green-500 rounded xshadow-md py-4 flex-1 md:mr-2 mb-4 md:mb-0 text-indigo-900"
+          >
             Confirm bid
           </button>
 
           <button
             type="button"
-            class="bg-gray-200 hover:bg-gray-300 rounded py-4 flex-1 ml-2"
+            class="w-full border border-white hover:border-gray-200 hover:bg-indigo-700 rounded text-white xshadow-md py-4 flex-1 md:ml-2"
             data-action="bids#cancelBid"
           >
             Cancel

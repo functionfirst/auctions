@@ -1,12 +1,6 @@
 <% if defined?(@auction.current_bid) && @auction.current_bid[:value] %>
-  <div class="flex items-start">
-    <h3 class="flex flex-col-reverse mr-3">
-      <span class="text-yellow-600 text-xs">Current Bid</span>
-      <span class="font-medium text-3xl"><%= number_to_currency(@auction.current_bid[:value]) %></span>
-    </h3>
-
-    <span class="rounded-full bg-white border border-yellow-100 px-5 py-2 text-sm text-yellow-900">
-      <%= @auction.bids.length %> bids
-    </span>
-  </div>
+  <h3 class="flex flex-col-reverse mr-3">
+    <span class="text-gray-600 text-sm">Current Bid</span>
+    <span class="text-indigo-900 font-semibold text-2xl"><%= number_to_currency(@auction.current_bid[:value]) %></span>
+  </h3>
 <% end %>

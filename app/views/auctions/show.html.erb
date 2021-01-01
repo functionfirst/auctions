@@ -14,6 +14,9 @@
       <p class="leading-loose text-sm">
         <%= @auction.description %>
       </p>
+    <div class="flex items-center justify-between -mt-10 px-6 h-20 bg-white mx-4 relative shadow-lg z-10 rounded-xl">
+      <%= render "bids/current_bid" %>
+      <%= render "countdown" %>
     </div>
 
     <div>
@@ -21,7 +24,6 @@
         <%= @auction.name %>
       </h1>
 
-      <%= render "countdown" %>
 
       <div class="flex flex-col border border-yellow-100 bg-yellow-50 p-8 xrounded-sm xshadow-inner mt-4">
         <%= render "bids/current_bid" %>

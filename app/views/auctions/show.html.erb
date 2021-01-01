@@ -2,35 +2,28 @@
   <%= @auction.name %>
 <% end %>
 
-<div class="p-6 bg-white">
+<div class="bg-white">
   <div class="md:grid grid-cols-2 gap-4">
-    <div>
-      <%= render "gallery" %>
+    <%= render "gallery" %>
 
-      <h3 class="uppercase text-gray-600 mb-4">
-        Description
-      </h3>
-
-      <p class="leading-loose text-sm">
-        <%= @auction.description %>
-      </p>
     <div class="flex items-center justify-between -mt-10 px-6 h-20 bg-white mx-4 relative shadow-lg z-10 rounded-xl">
       <%= render "bids/current_bid" %>
       <%= render "countdown" %>
     </div>
 
-    <div>
-      <h1 class="text-2xl mb-3 font-semibold uppercase text-gray-600">
+    <div class="p-5">
+      <h1 class="text-2xl mb-3 font-semibold text-indigo-900">
         <%= @auction.name %>
       </h1>
 
+      <p class="leading-loose truncate text-gray-600">
+        <%= @auction.description %>
+      </p>
 
-      <div class="flex flex-col border border-yellow-100 bg-yellow-50 p-8 xrounded-sm xshadow-inner mt-4">
-        <%= render "bids/current_bid" %>
-
-        <%= render "bids/no_bids" %>
-
-        <%= render 'bids/form' %>
-      </div>
+      <a href="#" class="text-yellow-700">More info</a>
     </div>
+
+    <%= render "bids/bids" %>
+
+    <%= render 'bids/form' %>
   </div>

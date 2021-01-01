@@ -1,11 +1,25 @@
 <% if @auction.images.attached? %>
-  <div class="grid grid-cols-3 gap-4">
-    <% @auction.images.each do |image|%>
-      <% if @auction.images.first == image %>
-        <%= image_tag url_for(image), alt: @auction.name, class: "col-span-3" %>
-      <% else %>
-        <%= image_tag url_for(image), alt: @auction.name, class: "col-span-1" %>
+  <div class="flex flex-col items-center relative">
+    <div class="flex w-full overflow-x-hidden rounded snap-x">
+      <% @auction.images.each.with_index do |image, index|%>
+        <div
+          id="gallery-<%= index %>"
+          class="flex flex-shrink-0 h-full items-center justify-center snap-start w-full"
+        >
+          <%= image_tag url_for(image), alt: @auction.name %>
+        </div>
       <% end %>
-    <% end %>
+    </div>
+
+    <div class="flex absolute bottom-16">
+      <% @auction.images.each.with_index do |image, index|%>
+        <a
+          href="#gallery-<%= index %>"
+          class="w-3 mr-2 h-3 text-gray-700 rounded-full bg-white flex justify-center items-center"
+          data-turbolinks="false"
+        >
+        </a>
+      <% end %>
+    </div>
   </div>
 <% end %>

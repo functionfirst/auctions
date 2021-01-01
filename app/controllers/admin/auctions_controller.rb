@@ -28,7 +28,7 @@ class Admin::AuctionsController < ApplicationController
 
     # @todo figure out how to purge or allow additional images to be uploaded
     # do not replace current images
-    @auction.images.attach(params[:images])
+    # @auction.images.attach(params[:images])
 
     if @auction.update(auction_params)
       flash[:notice] = "This auction was updated successfully"

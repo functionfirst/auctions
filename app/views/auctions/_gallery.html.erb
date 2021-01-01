@@ -1,9 +1,15 @@
 <% if @auction.images.attached? %>
-  <div class="flex flex-col items-center relative">
-    <div class="flex w-full overflow-x-hidden rounded snap-x">
+  <div
+    data-controller="gallery"
+    data-gallery-target="carousel"
+    data-gallery-current-slide-value="0"
+    class="flex flex-col items-center relative"
+  >
+    <div class="flex w-full overflow-x-scroll rounded snap-x">
       <% @auction.images.each.with_index do |image, index|%>
         <div
           id="gallery-<%= index %>"
+          data-gallery-target="image"
           class="flex flex-shrink-0 h-full items-center justify-center snap-start w-full"
         >
           <%= image_tag url_for(image), alt: @auction.name %>
@@ -14,6 +20,7 @@
     <div class="flex absolute bottom-16">
       <% @auction.images.each.with_index do |image, index|%>
         <a
+          data-gallery-target="indicator"
           href="#gallery-<%= index %>"
           class="w-3 mr-2 h-3 text-gray-700 rounded-full bg-white flex justify-center items-center"
           data-turbolinks="false"

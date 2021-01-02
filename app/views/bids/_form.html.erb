@@ -1,63 +1,71 @@
 <div
-  class="flex flex-col border border-yellow-100 bg-yellow-50 p-8 xrounded-sm xshadow-inner mt-6"
   data-controller="bids"
   data-bids-initial-value="3900"
   data-bids-increment-value="1"
   data-bids-confirm-value="false"
+  data-bids-bid-panel-value="false"
 >
-  <%= form_with model:  [ @auction, @auction.bids.build ] do |form| %>
-    <div class="flex flex-col">
-      <label for="bid_value" class="cursor-pointer mb-2">
-        Select a bid increment:
-      </label>
+  <div class="fixed bottom-0 left-0 right-0 z-10 p-4 bg-white h-20">
+    <button
+      data-action="bids#toggleBidPanel"
+      class="flex items-center justify-center w-full rounded-lg text-center font-semibold text-white bg-indigo-600 hover:bg-indigo-700 h-full"
+    >
+      Place a Bid!
+    </button>
+  </div>
 
-      <%= form.select(
-        :value,
-        options_for_select(Bid::INCREMENTS.map {|f| ["+ £#{('%0.2f' % f)}", f]}),
-        {},
-        {
-          class: 'appearance-none border px-4 py-3 w-full text-lg',
-          data: {
-            action: "bids#setIncrement"
+  <div
+    class="bottom-0 ease-in-out fixed left-0 right-0 transform transition-transform translate-y-0 z-20"
+    data-bids-target="bidPanel"
+  >
+    <%= form_with(model:  [ @auction, @auction.bids.build ]) do |form| %>
+      <div
+        class="p-4 bg-white"
+        data-bids-target="setupPanel"
+      >
+        <%= form.label(
+          :inc,
+          'Select a bid increment',
+          class: 'cursor-pointer mb-2'
+        ) %>
+
+        <%= form.select(
+          :inc,
+          options_for_select(Bid::INCREMENTS.map {|f| ["+ £#{('%0.2f' % f)}", f]}),
+          {},
+          {
+            class: 'appearance-none border px-4 py-3 w-full text-lg',
+            data: {
+              action: "bids#setIncrement"
+            }
           }
-        }
-      ) %>
-      <!--
-      <label
-        for="bid_value"
-        class="cursor-pointer mt-1 text-red-600 hidden text-sm"
-        data-bids-target="required"
-      >
-        Please select a bid increment
-      </label>
-      -->
+        ) %>
 
-      <button
-        type="button"
-        class="bg-indigo-600 hover:bg-indigo-700 mt-4 py-4 rounded shadow-md text-center text-white flex flex-col items-center justify-center"
-        data-action="bids#confirmBid"
-        data-bids-target="confirmBtn"
-      >
-        <span class="text-sm">Place a bid for:</span>
+        <p class="my-2 text-xs text-indigo-900 text-center">
+          Click to confirm this bid in the next step
+        </p>
 
-        <span
-          class="text-2xl font-semibold"
-          data-bids-target="totalBid"
-        >
-          <%= @auction.current_bid[:value] %>
-        </span>
-      </button>
+        <%= form.button(
+          type: 'button',
+          class: 'bg-indigo-600 hover:bg-indigo-700 py-4 rounded shadow-md text-center text-white flex flex-col items-center justify-center w-full',
+          data: { action: 'bids#toggleConfirmPanel' }
+        ) do %>
+          <span class="text-sm">
+            Placing a bid for:
+          </span>
 
-      <p
-        class="mt-2 text-xs text-indigo-900 text-center"
-        data-bids-target="confirmBtn"
-      >
-        You can review before submitting
-      </p>
+          <span
+            class="text-2xl font-semibold"
+            data-bids-target="selectedBid"
+          >
+            <%= @auction.current_bid[:value] %>
+          </span>
+        <% end %>
+      </div>
 
       <div
-        class="bg-indigo-600 p-4 rounded flex flex-col justify-center items-center mt-4"
-        data-bids-target="confirmation"
+        class="bg-indigo-600 p-4 xrounded flex flex-col justify-center items-center"
+        data-bids-target="confirmPanel"
       >
         <span class="text-sm text-white">
           You are about to place a bid for:
@@ -65,34 +73,37 @@
 
         <span
           class="text-2xl font-bold mb-4 text-white"
-          data-bids-target="totalBid"
+          data-bids-target="myBid"
         >
           <%= @auction.current_bid[:value] %>
         </span>
 
-        <div class="flex flex-col md:flex-row items-center justify-between w-full">
-          <button
-            type="submit"
-            class="w-full bg-green-400 hover:bg-green-500 rounded xshadow-md py-4 flex-1 md:mr-2 mb-4 md:mb-0 text-indigo-900"
-          >
-            Confirm bid
-          </button>
+        <%= form.hidden_field(
+          :value,
+          value: 0,
+          data: { 'bids-target': 'formInput' }
+        ) %>
 
-          <button
-            type="button"
-            class="w-full border border-white hover:border-gray-200 hover:bg-indigo-700 rounded text-white xshadow-md py-4 flex-1 md:ml-2"
-            data-action="bids#cancelBid"
-          >
-            Cancel
-          </button>
+        <div class="flex flex-col md:flex-row items-center justify-between w-full">
+          <%= form.button(
+            "Confirm Bid",
+            class: 'w-full bg-green-400 hover:bg-green-500 rounded xshadow-md py-4 flex-1 md:mr-2 mb-4 md:mb-0 text-indigo-900'
+          ) %>
+
+          <%= form.button(
+            "Cancel",
+            type: 'button',
+            class: 'w-full border border-white hover:border-gray-200 hover:bg-indigo-700 rounded text-white xshadow-md py-4 flex-1 md:ml-2',
+            data: { action: 'bids#toggleConfirmPanel'}
+          ) %>
         </div>
       </div>
-    </div>
+    <% end %>
+  </div>
 
-    <!--
-    <div class="bg-red-500 p-4 mt-4 rounded-md shadow text-center">
-      You must be logged in to bid on this Auction
-    </div>
-    -->
-  <% end %>
+  <div
+    class="bg-black z-10 fixed inset-0 hidden opacity-75"
+    data-bids-target="backdrop"
+    data-action="click->bids#toggleBidPanel"
+  />
 </div>

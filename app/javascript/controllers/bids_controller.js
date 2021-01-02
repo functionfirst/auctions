@@ -1,71 +1,71 @@
 import { Controller } from "stimulus"
+import { hide, show, addClass, removeClass, toggleClass, toggle } from "../lib/toggle"
+
+const currencyOptions = {
+  style: 'currency',
+  minimumFractionDigits: 2,
+  currencyDisplay: 'narrowSymbol',
+  currency: 'GBP'
+}
 
 export default class extends Controller {
-  static targets = [ "confirmation", "confirmBtn", "totalBid" ]
-  static values = { initial: Number, increment: Number, confirm: Boolean }
+  static targets = [ 'confirmPanel', 'myBid', 'selectedBid', 'bidPanel', 'backdrop', 'formInput', 'setupPanel' ]
+  static values = { initial: Number, increment: Number, confirm: Boolean, bidPanel: Boolean }
 
-  incrementValueChanged () {
-    const self = this
+  initialize () {
+    addClass(this.bidPanelTarget, 'translate-y-full')
+  }
 
-    this.totalBidTargets.forEach(function(item){
-      item.innerHTML = self.totalBid
-    })
+  bidPanelValueChanged () {
+    toggleClass(this.bidPanelTarget, 'translate-y-full', !this.bidPanelValue)
+    toggleClass(document.body, 'overflow-hidden', this.bidPanelValue)
+    toggle(this.backdropTarget, !this.bidPanelValue)
 
-    // if (!this.incrementValue) {
-    //   this.confirmValue = false
-    // }
+    const action = this.bidPanelValue ? 'addEventListener' : 'removeEventListener'
+    window[action]('keydown', this.escapeKeyPress.bind(this))
+
+    if (!this.bidPanelValue) {
+      this.confirmValue = false
+    }
   }
 
   confirmValueChanged () {
-    // console.log('confirm vakue changed')
-    // console.log(this.confirmValue)
+    toggle(this.confirmPanelTarget, !this.confirmValue)
+    toggle(this.setupPanelTarget, this.confirmValue)
+
     if (this.confirmValue) {
-      this.show(this.confirmationTarget)
-      this.hide(this.confirmBtnTargets)
-    } else {
-      this.hide(this.confirmationTarget)
-      this.show(this.confirmBtnTargets)
+      this.formInputTarget.value = this.total
+      this.myBidTarget.innerHTML = this.formattedTotal
     }
   }
 
-  get totalBid () {
-    const total = this.initialValue + this.incrementValue
+  incrementValueChanged () {
+    this.selectedBidTarget.innerHTML = this.formattedTotal
+  }
 
-    const options = {
-      style: 'currency',
-      minimumFractionDigits: 2,
-      currencyDisplay: 'narrowSymbol',
-      currency: 'GBP'
-    }
+  toggleBidPanel () {
+    this.bidPanelValue = !this.bidPanelValue
+  }
 
-    return new Intl.NumberFormat('en-GB', options).format(total)
+  escapeKeyPress(e) {
+    e = e || window.event
+    if (e.keyCode !== 27) return
+    this.bidPanelValue = false
+  }
+
+  get total () {
+    return this.initialValue + this.incrementValue
+  }
+
+  get formattedTotal () {
+    return new Intl.NumberFormat('en-GB', currencyOptions).format(this.total)
   }
 
   setIncrement(e) {
     this.incrementValue = e.target.value
   }
 
-  hide (target) {
-    const targets = Array.isArray(target) ? target : [target]
-    targets.forEach(function(item) {
-      item.classList.add("hidden")
-    })
-  }
-
-  show (target) {
-    const targets = Array.isArray(target) ? target : [target]
-    targets.forEach(function(item) {
-      item.classList.remove("hidden")
-    })
-  }
-
-  cancelBid () {
-    this.confirmValue = false
-  }
-
-  confirmBid () {
-    // console.log('confirm bid')
-    // if (!this.incrementValue) return
-    this.confirmValue = true
+  toggleConfirmPanel () {
+    this.confirmValue = !this.confirmValue
   }
 }

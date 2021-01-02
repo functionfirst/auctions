@@ -20,6 +20,8 @@ gem 'turbolinks_render'
 # https://github.com/radar/distance_of_time_in_words
 gem 'dotiw'
 
+gem 'devise'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production

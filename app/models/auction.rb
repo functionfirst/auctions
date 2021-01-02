@@ -1,6 +1,6 @@
 class Auction < ApplicationRecord
   has_many_attached :images
-  has_many :bids, dependent: :destroy
+  has_many :bids, -> { order('value desc').limit(10) }, dependent: :destroy
 
   validates :name, presence: true, length: { minimum: 5 }
   validates :start_date, presence: true

@@ -1,5 +1,5 @@
-<div class="bg-yellow-300 p-8 mx-4 rounded-xl text-center leading-loose">
-  <% if @auction.bids.length == 0%>
+<% if @auction.bids.length == 0%>
+  <div class="bg-yellow-300 p-8 mx-4 rounded-xl text-center leading-loose">
     <p class="text-sm font-semibold">
       This auction currently has no bids.
     </p>
@@ -7,12 +7,27 @@
     <p>
       <span class="text-sm">Bidding for this auction will start from:</span>
       <span class="block font-bold text-2xl leading-none mt-1">
-        <%= number_to_currency(@auction.start_amount) %>
+        <%= number_to_currency @auction.start_amount %>
       </span>
     </p>
-  <% else %>
+  </div>
+<% else %>
+  <div class="mx-4 pb-20">
+    <h3 class="text-indigo-900 mb-2 font-semibold">
+      Bidders
+    </h3>
     <% @auction.bids.each do |bid| %>
-      <%= bid %>
+      <div class="flex justify-between mb-4 items-center">
+        <div>
+          <span class="block font-medium text-indigo-900">Firstname Surname</span>
+          <time datetime="<%= bid.created_at.strftime("%d/%m/%Y %H:%M:%S") %>" class="text-sm text-gray-600">
+            <%= distance_of_time_in_words Time.now, bid.created_at %> ago
+          </time>
+        </div>
+        <span class="bg-yellow-300 px-3 py-1 rounded-md">
+          <%= number_to_currency bid.value %>
+        </span>
+      </div>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>

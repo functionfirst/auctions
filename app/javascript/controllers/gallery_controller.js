@@ -13,7 +13,6 @@ export default class extends Controller {
 
     if (activated.intersectionRatio > 0) {
       this.currentSlideValue = this.elementIndices[activated.target.getAttribute("id")]
-      window.location.hash = `gallery-${this.currentSlideValue}`
       this.highlightIndicator()
     }
   }
@@ -23,6 +22,11 @@ export default class extends Controller {
       const action = this.currentSlideValue === i ? 'add' : 'remove'
       this.indicatorTargets[i].classList[action]('bg-indigo-900')
     }
+  }
+
+  selectIndicator (e) {
+    document.querySelector(e.target.hash).scrollIntoView(true)
+    e.preventDefault()
   }
 
   createObserver() {

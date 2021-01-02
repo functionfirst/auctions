@@ -1,51 +1,69 @@
 <% if defined?(@auctions) %>
-  <div class="mt-6 mb-12">
-    <ul
-      class="flex flex-wrap"
-      role="list"
-    >
-      <% @auctions.each do |auction| %>
-        <li class="mb-4 md:w-1/3 lg:w-1/4">
-          <%= link_to auction_path(auction), class: "rounded-md m-2 overflow-hidden shadow-sm bg-white block hover:shadow-md" do %>
-            <div class="relative">
-              <div class="absolute z-10 right-0">
-                <%= render "status" %>
-              </div>
+  <ul
+    class="flex flex-wrap"
+    role="list"
+  >
+    <% @auctions.each do |auction| %>
+      <li class="px-5 mt-5 md:w-1/3 lg:w-1/4 w-full">
+        <div class="rounded-md m-2 overflow-hidden shadow-2xl bg-white flex flex-col items-end">
+          <% if auction.images.attached? %>
+            <%= link_to auction_path(auction), class: 'overflow-hidden h-48 block' do %>
+              <%= image_tag url_for(auction.images[0]), alt: auction.name %>
+            <% end %>
+          <% end %>
 
-              <% if auction.images.attached? %>
-                <%= image_tag url_for(auction.images[0]), alt: auction.name %>
+          <div class="relative">
+            <div class="flex justify-end h-8 absolute right-0 top-0 -mt-4 shadow-md z-10 rounded-l bg-white text-sm">
+              <% if auction.is_live %>
+                <div class="px-3 flex items-center font-medium text-indigo-900 whitespace-nowrap">
+                  <%= distance_of_time_in_words(Time.now, auction.end_date, true, { compact: true, words_connector: ' ', two_words_connector: ' ', last_word_connector: ' ' }) %>
+                </div>
               <% end %>
 
-              <% if defined?(auction.countdown) %>
-                <div class="flex items-center justify-center z-10 absolute mb-2 left-0 ml-2 bottom-0">
-                  <div class="bg-white px-3 py-2 rounded">
-                    <span class="font-bold">{{ auction.countdown.days }}</span>d
-                    <span class="font-bold">{{ auction.countdown.hours }}</span>h
-                    <span class="font-bold">{{ auction.countdown.minutes }}</span>min
-                    <span class="font-bold">{{ auction.countdown.seconds }}</span>sec
-                  </div>
+              <% if defined?(auction.current_bid) && auction.current_bid[:value] %>
+                <div class="px-3 flex items-center font-semibold bg-indigo-900 text-white ">
+                  <%= number_to_currency(auction.current_bid[:value]) %>
                 </div>
               <% end %>
             </div>
+          </div>
 
-            <div class="p-4">
-              <%= auction.name %>
-
-              <% if defined?(auction.currentBid.value) %>
-                <p class="text-gray-700 text-sm mt-4">
-                  Highest bid
-                </p>
-
-                <p class="text-xl">
-                  £ <%= auction.currentBid.value %>
-                </p>
-              <% end %>
+          <% if defined?(auction.countdown) %>
+            <div class="flex items-center justify-center z-10 absolute mb-2 left-0 ml-2 bottom-0">
+              <div class="bg-white px-3 py-2 rounded">
+                <span class="font-bold">{{ auction.countdown.days }}</span>d
+                <span class="font-bold">{{ auction.countdown.hours }}</span>h
+                <span class="font-bold">{{ auction.countdown.minutes }}</span>min
+                <span class="font-bold">{{ auction.countdown.seconds }}</span>sec
+              </div>
             </div>
           <% end %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+
+          <div class="w-full p-4 pt-6">
+            <h2 class="text-xl mb-1 font-semibold text-indigo-900">
+              <%= link_to auction_path(auction) do %>
+              <%= auction.name %>
+              <% end %>
+            </h2>
+
+            <p class="truncate text-gray-500 text-sm">
+              <%= auction.description %>
+            </p>
+
+            <% if defined?(auction.currentBid.value) %>
+              <p class="text-gray-700 text-sm mt-4">
+                Highest bid
+              </p>
+
+              <p class="text-xl">
+                £ <%= auction.currentBid.value %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
 <% else %>
   <div class="text-center leading-loose mt-12">
     <div class="flex justify-center items-center">

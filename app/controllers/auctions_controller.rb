@@ -1,5 +1,5 @@
 class AuctionsController < ApplicationController
-  skip_before_action :authenticate_user!, :only => [:index, :show]
+  # skip_before_action :authenticate_user!, :only => [:index, :show]
 
   def index
     @auctions = Auction.all
@@ -42,8 +42,6 @@ class AuctionsController < ApplicationController
 
   private
     def auction_params
-      params
-        .require(:auction)
-        .permit(:name, :description, :start_date, :end_date, :start_amount, images: [])
+      params.require(:auction).permit(:name, :description, :start_date, :end_date, :start_amount, images: [])
     end
 end

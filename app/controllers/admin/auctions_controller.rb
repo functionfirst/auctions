@@ -1,4 +1,4 @@
-class Admin::AuctionsController < AdminController
+class Admin::AuctionsController < Admin::BaseController
   def index
     @auctions = Auction.all
   end
@@ -57,8 +57,6 @@ class Admin::AuctionsController < AdminController
 
   private
     def auction_params
-      params
-        .require(:auction)
-        .permit(:name, :description, :start_date, :end_date, :featured, :enabled, :start_amount, images: [])
+      params.require(:auction).permit(:name, :description, :start_date, :end_date, :featured, :enabled, :start_amount, images: [])
     end
 end

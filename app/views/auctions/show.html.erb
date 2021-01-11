@@ -7,7 +7,7 @@
     <%= render "gallery" %>
 
     <div class="flex items-center justify-between -mt-10 px-6 h-20 bg-white mx-4 relative shadow-lg z-10 rounded-xl">
-      <%= render "bids/current_bid" %>
+      <%= render partial: "bids/current_bid", locals: { auction: @auction } %>
       <%= render "countdown" %>
     </div>
 

@@ -1,6 +1,10 @@
-<% if defined?(@auction.current_bid) && @auction.current_bid[:value] %>
-  <h3 class="flex flex-col-reverse mr-3">
+
+<h3 class="flex flex-col-reverse mr-3">
+  <% if auction.current_bid %>
     <span class="text-gray-600 text-sm">Current Bid</span>
-    <span class="text-indigo-900 font-semibold text-2xl"><%= number_to_currency(@auction.current_bid[:value]) %></span>
-  </h3>
-<% end %>
+    <span class="text-indigo-900 font-semibold text-2xl"><%= number_to_currency(auction.current_bid.value) %></span>
+  <% else %>
+    <span class="text-gray-600 text-sm">Starting Bid</span>
+    <span class="text-indigo-900 font-semibold text-2xl"><%= number_to_currency(auction.start_amount) %></span>
+  <% end %>
+</h3>

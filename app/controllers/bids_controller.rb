@@ -1,9 +1,27 @@
 class BidsController < ApplicationController
+  include ActionView::Helpers::NumberHelper
+
   before_action :get_auction
 
   def create
-    @bid = @auction.bids.create(bid_params)
-    redirect_to auction_path(@auction)
+    @current_bid = @auction.bids.first
+    
+    # Check if this is the highest bid
+    if (@current_bid.value < bid_params[:value].to_f)
+      @bid = @auction.bids.create(bid_params)
+
+      if @bid.save
+        notice = 'Bid was successfully created.'
+      else
+        redirect_to auction_path(@auction), notice: 'Something went wrong when saving your bid.'
+        notice = 'Something went wrong when saving your bid.'
+      end
+    else
+      highest_bid_value = number_to_currency(@current_bid.value)
+      notice = "Your bid is too low, the highest bid is currently #{highest_bid_value}"
+    end
+
+    redirect_to auction_path(@auction), notice: notice
   end
 
   def destroy

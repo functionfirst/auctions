@@ -20,6 +20,6 @@ class BidsController < ApplicationController
   end
 
   def bid_params
-    params.require(:bid).permit(:user_id, :value)
+    params.require(:bid).except(:inc).permit(:user_id, :value)
   end
 end

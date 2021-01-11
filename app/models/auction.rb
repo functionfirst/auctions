@@ -24,6 +24,8 @@ class Auction < ApplicationRecord
   end
 
   def current_bid
-    { value: 3900 }
+    if bids.length > 0 then
+      bids.first
+    end
   end
 end

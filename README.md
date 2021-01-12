@@ -1,24 +1,23 @@
-# README
+# AUCTIONS
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Dev Setup
 
-Things you may want to cover:
+1. Copy envirionement file.
 
-* Ruby version
+```
+cp .env_example .env
+```
 
-* System dependencies
+2. Modify contents of `.env` to your requirements
 
-* Configuration
+3. Spin up docker containers:
 
-* Database creation
+```
+docker-compose up -d
+```
 
-* Database initialization
+4. Create and Seed DB then run migrations:
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+docker-compose exec app bundle exec rake db:setup db:migrate
+```

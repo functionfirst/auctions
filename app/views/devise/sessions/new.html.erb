@@ -1,7 +1,8 @@
 <div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full space-y-8">
     <div>
-      <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow">
+      <%= image_tag("logo.svg", alt: "Auction Logo", class: "mx-auto h-12 w-auto") %>
+
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
         Sign in to your account
       </h2>
@@ -37,11 +38,11 @@
         </div>
 
         <div class="flex items-center justify-between mt-6">
-        <% if devise_mapping.rememberable? %>
-          <div class="flex items-center">
-            <%= f.check_box :remember_me, class: 'h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded' %>
-            <%= f.label :remember_me, "Remember me", class: 'ml-2 block text-sm text-gray-900' %>
-          </div>
+          <% if devise_mapping.rememberable? %>
+            <div class="flex items-center">
+              <%= f.check_box :remember_me, class: 'h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded' %>
+              <%= f.label :remember_me, "Remember me", class: 'ml-2 block text-sm text-gray-900' %>
+            </div>
           <% end %>
 
           <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
@@ -50,7 +51,7 @@
         </div>
 
         <div class="mt-6">
-          <%= f.submit "Sign in", class: 'w-full py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' %>
+          <%= f.submit "Login", class: 'w-full py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' %>
         </div>
       <% end %>
     </div>

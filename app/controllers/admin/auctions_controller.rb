@@ -13,7 +13,7 @@ class Admin::AuctionsController < Admin::BaseController
 
     if @auction.save
       flash[:notice] = "The auction was created successfully"
-      redirect_to [:admin, @auction]
+      redirect_to admin_auctions_path
     else
       render :new
     end

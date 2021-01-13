@@ -105,6 +105,16 @@
       </nav>
 
       <main>
+        <div class="bg-white">
+          <div class="max-w-7xl mx-auto py-4 flex justify-between items-center">
+            <h1 class="text-xl font-semibold">
+              <%= yield :html_title %>
+            </h1>
+
+            <%= yield :page_actions %>
+          </div>
+        </div>
+
         <div class="max-w-7xl mx-auto my-4">
           <%= yield %>
         </div>

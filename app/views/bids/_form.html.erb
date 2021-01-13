@@ -58,7 +58,7 @@
             class="text-2xl font-semibold"
             data-bids-target="selectedBid"
           >
-            <%= @auction.current_bid[:value] %>
+            <%= @auction.current_bid.value %>
           </span>
         <% end %>
       </div>
@@ -75,7 +75,7 @@
           class="text-2xl font-bold mb-4 text-white"
           data-bids-target="myBid"
         >
-          <%= @auction.current_bid[:value] %>
+          <%= @auction.current_bid.value %>
         </span>
 
         <%= form.hidden_field(

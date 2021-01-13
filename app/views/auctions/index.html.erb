@@ -24,9 +24,9 @@
                 </div>
               <% end %>
 
-              <% if defined?(auction.current_bid) && auction.current_bid[:value] %>
+              <% if defined?(auction.current_bid.value) %>
                 <div class="px-3 flex items-center font-semibold bg-indigo-900 text-white ">
-                  <%= number_to_currency(auction.current_bid[:value]) %>
+                  <%= number_to_currency(auction.current_bid.value) %>
                 </div>
               <% end %>
             </div>

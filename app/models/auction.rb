@@ -23,9 +23,11 @@ class Auction < ApplicationRecord
     DateTime.now > start_date
   end
 
-  def current_bid
+  def minimum_bid_amount
     if bids.length > 0 then
-      bids.first
+      bids.first.value + 1
+    else
+      start_amount
     end
   end
 end

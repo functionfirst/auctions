@@ -1,6 +1,6 @@
 <div
   data-controller="bids"
-  data-bids-initial-value="3900"
+  data-bids-initial-value="<%= @auction.minimum_bid_amount %>"
   data-bids-increment-value="1"
   data-bids-confirm-value="false"
   data-bids-bid-panel-value="false"
@@ -58,7 +58,7 @@
             class="text-2xl font-semibold"
             data-bids-target="selectedBid"
           >
-            <%= @auction.current_bid.value %>
+            <%= @auction.minimum_bid_amount %>
           </span>
         <% end %>
       </div>
@@ -75,7 +75,7 @@
           class="text-2xl font-bold mb-4 text-white"
           data-bids-target="myBid"
         >
-          <%= @auction.current_bid.value %>
+          <%= @auction.minimum_bid_amount %>
         </span>
 
         <%= form.hidden_field(

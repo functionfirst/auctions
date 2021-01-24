@@ -1,10 +1,9 @@
-
 <h3 class="flex flex-col-reverse mr-3">
-  <% if auction.current_bid %>
-    <span class="text-gray-600 text-sm">Current Bid</span>
-    <span class="text-indigo-900 font-semibold text-2xl"><%= number_to_currency(auction.current_bid.value) %></span>
-  <% else %>
-    <span class="text-gray-600 text-sm">Starting Bid</span>
-    <span class="text-indigo-900 font-semibold text-2xl"><%= number_to_currency(auction.start_amount) %></span>
-  <% end %>
+  <span class="text-gray-600 text-sm">
+    <% if auction.bids %>Current Bid<% else %>Starting Bid<% end %>
+  </span>
+
+  <span class="text-indigo-900 font-semibold text-2xl">
+    <%= number_to_currency(auction.minimum_bid_amount) %>
+  </span>
 </h3>

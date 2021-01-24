@@ -4,23 +4,7 @@ class BidsController < ApplicationController
   before_action :get_auction
 
   def create
-    @current_bid = @auction.bids.first
-    
-    # Check if this is the highest bid
-    if (@current_bid.value < bid_params[:value].to_f)
-      @bid = @auction.bids.create(bid_params)
-
-      if @bid.save
-        notice = 'Bid was successfully created.'
-      else
-        redirect_to auction_path(@auction), notice: 'Something went wrong when saving your bid.'
-        notice = 'Something went wrong when saving your bid.'
-      end
-    else
-      highest_bid_value = number_to_currency(@current_bid.value)
-      notice = "Your bid is too low, the highest bid is currently #{highest_bid_value}"
-    end
-
+    notice = create_bid
     redirect_to auction_path(@auction), notice: notice
   end
 
@@ -32,6 +16,21 @@ class BidsController < ApplicationController
   end
 
   private
+
+  def create_bid
+    @bid = @auction.bids.new(bid_params)
+    @bid_amount = bid_params[:value].to_f
+
+    if @bid_amount <= @auction.minimum_bid_amount
+      return "Your bid is too low, the minimum bid is #{number_to_currency(@auction.minimum_bid_amount)}."
+    end
+
+    if @bid.save
+      return 'Bid was sucessfully created.'
+    else
+      return 'Something went wrong. Your bid was not recorded.'
+    end
+  end
 
   def get_auction
     @auction = Auction.find(params[:auction_id])

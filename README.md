@@ -1,5 +1,8 @@
 # AUCTIONS
 
+Learning project - building a real-time auction app using Ruby while exploring the benefits of Hotwire/Stimulus/Turbo.
+
+
 ## Dev Setup
 
 1. Copy envirionement file.

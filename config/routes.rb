@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     resources :bids
   end
 
+  resources :watchlist
+
   namespace :admin do
     resources :auctions do
       member do

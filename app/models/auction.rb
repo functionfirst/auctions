@@ -24,10 +24,10 @@ class Auction < ApplicationRecord
   end
 
   def minimum_bid_amount
-    if bids.length > 0 then
-      bids.first.value + 1
-    else
+    if bids.empty? then
       start_amount
+    else
+      bids.first.value.to_f
     end
   end
 end

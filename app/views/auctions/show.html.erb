@@ -2,8 +2,18 @@
   <%= @auction.name %>
 <% end %>
 
-<div class="bg-white">
-  <div class="md:grid grid-cols-2 gap-4">
+<div class="flex flex-col h-full">
+  <div class="flex-1 overflow-auto relative">
+    <div class="flex items-center justify-between absolute z-10 top-6 inset-x-6">
+      <%= link_to(auctions_path, class: 'flex items-center justify-center bg-white rounded-md h-10 w-10 p-2') do %>
+        <%= show_svg('chevron-left.svg') %>
+      <% end %>
+      
+      <%= link_to(new_watchlist_path, class: 'flex items-center justify-center bg-white rounded-md h-10 w-10 p-2') do %>
+        <%= show_svg('heart.svg') %>
+      <% end %>
+    </div>
+
     <%= render "gallery" %>
 
     <div class="flex items-center justify-between -mt-10 px-6 h-20 bg-white mx-4 relative shadow-lg z-10 rounded-xl">
@@ -16,11 +26,13 @@
         <%= @auction.name %>
       </h1>
 
-      <div
-        class="leading-loose text-gray-600"
-        data-description-target="text"
-      >
-        <%= @auction.description %>
+      <div class="grid leading-loose text-gray-600">
+        <p
+          class="truncate"
+          data-description-target="text"
+        >
+          <%= @auction.description %>
+        </p>
       </div>
 
       <button
@@ -41,6 +53,7 @@
     </div>
 
     <%= render "bids/bids" %>
-
-    <%= render 'bids/form' %>
   </div>
+
+  <%= render 'bids/form' %>  
+</div>

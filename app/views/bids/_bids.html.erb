@@ -1,18 +1,5 @@
-<% if @auction.bids.length == 0%>
-  <div class="bg-yellow-300 p-8 mx-4 rounded-xl text-center leading-loose">
-    <p class="text-sm font-semibold">
-      This auction currently has no bids.
-    </p>
-
-    <p>
-      <span class="text-sm">Bidding for this auction will start from:</span>
-      <span class="block font-bold text-2xl leading-none mt-1">
-        <%= number_to_currency @auction.start_amount %>
-      </span>
-    </p>
-  </div>
-<% else %>
-  <div class="mx-4 pb-20">
+<% if @auction.bids.any? %>
+  <div class="mx-4">
     <h3 class="text-indigo-900 mb-2 font-semibold">
       Bidders
     </h3>

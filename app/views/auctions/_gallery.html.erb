@@ -5,7 +5,7 @@
     data-gallery-current-slide-value="0"
     class="flex flex-col items-center relative"
   >
-    <div class="flex w-full overflow-x-scroll rounded snap-x">
+    <div class="flex w-full overflow-x-scroll snap-x">
       <% @auction.images.each.with_index do |image, index|%>
         <div
           id="gallery-<%= index %>"
@@ -17,17 +17,19 @@
       <% end %>
     </div>
 
-    <div class="flex absolute bottom-16">
-      <% @auction.images.each.with_index do |image, index|%>
-        <a
-          data-action="gallery#selectIndicator"
-          data-gallery-target="indicator"
-          href="#gallery-<%= index %>"
-          class="w-3 mr-2 h-3 text-gray-700 rounded-full bg-white flex justify-center items-center"
-          data-turbolinks="false"
-        >
-        </a>
-      <% end %>
-    </div>
+    <% if @auction.images.size >  1%>
+      <div class="flex absolute bottom-16 items-center">
+        <% @auction.images.each.with_index do |image, index|%>
+          <a
+            data-action="gallery#selectIndicator"
+            data-gallery-target="indicator"
+            href="#gallery-<%= index %>"
+            class="border-2 border-white w-2 mr-2 h-2 text-gray-700 rounded-full bg-white flex justify-center items-center"
+            data-turbolinks="false"
+          >
+          </a>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 <% end %>

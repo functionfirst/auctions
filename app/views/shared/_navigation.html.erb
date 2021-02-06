@@ -1,0 +1,18 @@
+<nav class="hidden md:block bg-gray-800 transform transition -translate-y-full md:translate-y-0 md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center">
+        <div class="flex-shrink-0">
+          <%= link_to image_tag("logo.svg", alt: "Realtime Auctions", class: "h-8 w-8"), root_path %>
+        </div>
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-4">
+            <%= link_to 'Auctions', auctions_path, class: "#{cp(auctions_path)} px-3 py-2 rounded-md text-sm font-medium" %>
+          </div>
+        </div>
+      </div>
+
+      <%= render "shared/profile_dropdown" %>
+    </div>
+  </div>
+</nav>

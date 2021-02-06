@@ -4,6 +4,14 @@
 
 // You can add your own custom components/styles here
 
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
 .snap-start {
   scroll-snap-align: start;
 }
